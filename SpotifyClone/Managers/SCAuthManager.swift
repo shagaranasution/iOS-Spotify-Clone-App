@@ -11,7 +11,10 @@ final class SCAuthManager {
     public static let shared = SCAuthManager()
     
     /*
-     To be able to build and run the app, you should uncomment the codes at line 20-23.
+     To be able to build and run the app, you should first delete
+     Credentials.swift located at "/SpotifyClone/Resources/" or just unchecked
+     the file from target membership then uncomment the codes at line 20-23 below.
+     
      To be able to login with spotify, you should fill clientId and clientSecret
      with your own Client Id and Client Secret which you can acquire from
      setting up App in Spotify Developer Dashboard (https://developer.spotify.com/dashboard).
