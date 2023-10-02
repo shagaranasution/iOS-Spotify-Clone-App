@@ -10,9 +10,21 @@ import Foundation
 final class SCAuthManager {
     public static let shared = SCAuthManager()
     
+    /*
+     To be able to build and run the app, you should uncomment the codes at line 20-23.
+     To be able to login with spotify, you should fill clientId and clientSecret
+     with your own Client Id and Client Secret which you can acquire from
+     setting up App in Spotify Developer Dashboard (https://developer.spotify.com/dashboard).
+     */
+    
+//    struct Credentials {
+//        static let clientId = ""
+//        static let clientSecret = ""
+//    }
+    
     struct Constants {
-        static let clientId = "b942ce8e965c447fb120c26891b60144"
-        static let clientSecret = "49b064b2f0e54c6e8dd14e171081cbf6"
+        static let clientId = Credentials.clientId
+        static let clientSecret = Credentials.clientSecret
         static let spotifyAccountBaseURLString = "https://accounts.spotify.com"
         static let tokenAPIURLString = "https://accounts.spotify.com/api/token"
         static let redirectURI = "https://github.com/shagaranasution"

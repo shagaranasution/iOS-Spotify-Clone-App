@@ -56,6 +56,7 @@
 		FFA42B132AA9AC500020602E /* SCCategoryPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA42B122AA9AC500020602E /* SCCategoryPlaylistViewController.swift */; };
 		FFA83DBA2A97019C00E2FE76 /* SCAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA83DB92A97019C00E2FE76 /* SCAuthResponse.swift */; };
 		FFA83DC42A98902D00E2FE76 /* SCSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA83DC32A98902D00E2FE76 /* SCSettingsModel.swift */; };
+		FFAFCF842ACA8F2300D2095F /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAFCF832ACA8F2300D2095F /* Credentials.swift */; };
 		FFB761BA2AB046AC0015C139 /* SCSearchResultsTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB761B92AB046AC0015C139 /* SCSearchResultsTableViewCellViewModel.swift */; };
 		FFB761BD2AB04BDA0015C139 /* SCPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB761BC2AB04BDA0015C139 /* SCPlaybackPresenter.swift */; };
 		FFCCF6702A9473030052FEF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCCF66F2A9473030052FEF3 /* AppDelegate.swift */; };
@@ -136,6 +137,7 @@
 		FFA42B122AA9AC500020602E /* SCCategoryPlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCategoryPlaylistViewController.swift; sourceTree = "<group>"; };
 		FFA83DB92A97019C00E2FE76 /* SCAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAuthResponse.swift; sourceTree = "<group>"; };
 		FFA83DC32A98902D00E2FE76 /* SCSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSettingsModel.swift; sourceTree = "<group>"; };
+		FFAFCF832ACA8F2300D2095F /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		FFB761B92AB046AC0015C139 /* SCSearchResultsTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSearchResultsTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		FFB761BC2AB04BDA0015C139 /* SCPlaybackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCPlaybackPresenter.swift; sourceTree = "<group>"; };
 		FFCCF66C2A9473030052FEF3 /* SpotifyClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -366,6 +368,7 @@
 				FFCCF6712A9473030052FEF3 /* SceneDelegate.swift */,
 				FFCCF6782A9473050052FEF3 /* Assets.xcassets */,
 				FFF7ED972A949DFD00AB5CE0 /* SCExtensions.swift */,
+				FFAFCF832ACA8F2300D2095F /* Credentials.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				FF9097D22AA8830A0075CF3B /* SCCategoryCollectionViewCell.swift in Sources */,
 				FFD4E7962A9C4EA80033CF08 /* SCAlbum.swift in Sources */,
 				FFA42B0B2AA97D860020602E /* SCGetCategoriesResponse.swift in Sources */,
+				FFAFCF842ACA8F2300D2095F /* Credentials.swift in Sources */,
 				FF1A70662A9F3C140010CB07 /* SCGetPlaylistResponse.swift in Sources */,
 				FFD4E7A72A9C97B50033CF08 /* SCTrackCollectionViewCell.swift in Sources */,
 				FFD4E79E2A9C526D0033CF08 /* SCTrack.swift in Sources */,
