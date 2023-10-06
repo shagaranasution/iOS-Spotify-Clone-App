@@ -53,8 +53,6 @@ final class SCPlayerViewController: UIViewController {
         view.addSubviews(artworkImageView, playerControlsView)
         addBaseConstraints()
         updateView()
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        view.addGestureRecognizer(panGesture)
     }
     
     override func viewWillLayoutSubviews() {
@@ -69,11 +67,8 @@ final class SCPlayerViewController: UIViewController {
     
     // MARK: - Private Mathods
     
-    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-        print("Panned")
-    }
-    
     private func updateView() {
+        title = dataSource?.title
         artworkImageView.sd_setImage(with: dataSource?.artworkImageURL) { [weak self] image, _, _, _ in
             if image == nil {
                 self?.artworkImageView.image = UIImage(systemName: "music.note")

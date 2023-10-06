@@ -10,6 +10,7 @@ import AVFoundation
 
 protocol SCPlayerDataSource: AnyObject {
     var songTitle: String? { get }
+    var title: String? { get }
     var subtitle: String? { get }
     var artworkImageURL: URL? { get }
 }
@@ -30,13 +31,18 @@ final class SCPlaybackPresenter {
         
         return nil
     }
-    
     fileprivate var player: AVPlayer?
-    fileprivate var playerQueue: AVQueuePlayer?
     
     private lazy var unavailableSongAlert: UIAlertController = {
-        let alertController = UIAlertController(title: "Unavailable", message: "We are sorry! The song is not currently available to play.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+        let alertController = UIAlertController(
+            title: "Unavailable",
+            message: "We are sorry! The song is not currently available to play.",
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(
+            title: "Dismiss",
+            style: .cancel
+        ))
         
         return alertController
     }()
@@ -63,7 +69,6 @@ final class SCPlaybackPresenter {
             
             return
         }
-        playerQueue = nil
         player = AVPlayer(url: url)
         player?.volume = 0.3
         
@@ -83,14 +88,19 @@ final class SCPlaybackPresenter {
         }
     }
     
-    public func startPlayback(from viewController: UIViewController, tracks: [SCTrack]) {
+    public func startPlayback(from viewController: UIViewController, tracks: [SCTrack], startAt index: Int) {
         self.track = nil
         self.tracks = tracks
-        self.currentTrackIndex = 0
+        self.currentTrackIndex = index
         
-        player = nil
-        playerQueue = createAVQueuePlayer(with: tracks)
-        playerQueue?.volume = 0.3
+        guard let url = URL(string: currentTrack?.previewURL ?? "") else {
+            viewController.present(unavailableSongAlert, animated: true)
+            return
+        }
+        
+        self.player = nil
+        self.player = AVPlayer(url: url)
+        self.player?.volume = 0.3
         
         let vc = SCPlayerViewController()
         vc.title = tracks.first?.artists.compactMap { $0.name }.joined(separator: ", ")
@@ -101,7 +111,7 @@ final class SCPlaybackPresenter {
         vc.delegate = self
         
         viewController.present(nav, animated: true) { [weak self] in
-            self?.playerQueue?.play()
+            self?.player?.play()
         }
     }
     
@@ -118,16 +128,10 @@ extension SCPlaybackPresenter: SCPlayerViewControllerDelegate {
         } else {
             if currentTrackIndex > 0 {
                 currentTrackIndex -= 1
-                playerQueue?.removeAllItems()
-                var tracks = self.tracks
-                tracks.swapAt(0, currentTrackIndex)
-                playerQueue = createAVQueuePlayer(with: tracks)
-                playerQueue?.volume = 0.3
-                playerQueue?.play()
-            } else {
-                playerQueue?.seek(to: .zero)
-                playerQueue?.play()
             }
+            guard let url = URL(string: currentTrack?.previewURL ?? "") else { return }
+            self.player = AVPlayer(url: url)
+            self.player?.play()
         }
     }
     
@@ -135,44 +139,35 @@ extension SCPlaybackPresenter: SCPlayerViewControllerDelegate {
         if self.tracks.isEmpty {
             player?.pause()
             didTapForward?(.paused)
-        } else if var player = playerQueue {
-            player.advanceToNextItem()
+        } else {
             if currentTrackIndex < tracks.count - 1 {
                 currentTrackIndex += 1
+                guard let url = URL(string: currentTrack?.previewURL ?? "") else { return }
+                self.player = AVPlayer(url: url)
+                self.player?.play()
             } else {
                 currentTrackIndex = 0
                 didTapForward?(.paused)
-                player.removeAllItems()
-                player = createAVQueuePlayer(with: tracks)
-                player.volume = 0.3
-                self.playerQueue = player
+                guard let url = URL(string: currentTrack?.previewURL ?? "") else { return }
+                self.player = AVPlayer(url: url)
+                self.player?.play()
+                didTapForward?(.playing)
             }
         }
     }
     
     func scPlayerViewControllerDelegate(_ viewController: SCPlayerViewController, didTapPlayPause: ((AVPlayer.TimeControlStatus) -> Void)?) {
-        if let player = self.player {
-            switch player.timeControlStatus {
-            case .playing:
-                player.pause()
-                didTapPlayPause?(.paused)
-            case .paused:
-                player.play()
-                didTapPlayPause?(.playing)
-            default:
-                break
-            }
-        } else if let player = playerQueue {
-            switch player.timeControlStatus {
-            case .playing:
-                player.pause()
-                didTapPlayPause?(.paused)
-            case .paused:
-                player.play()
-                didTapPlayPause?(.playing)
-            default:
-                break
-            }
+        guard let player = self.player else { return }
+        
+        switch player.timeControlStatus {
+        case .playing:
+            player.pause()
+            didTapPlayPause?(.paused)
+        case .paused:
+            player.play()
+            didTapPlayPause?(.playing)
+        default:
+            break
         }
     }
     
@@ -189,11 +184,16 @@ extension SCPlaybackPresenter: SCPlayerDataSource {
         return currentTrack?.name
     }
     
-    public var subtitle: String? {
+    public var title: String? {
         return currentTrack?.artists.compactMap { $0.name }.joined(separator: ", ")
+    }
+    
+    public var subtitle: String? {
+        return title
     }
     
     public var artworkImageURL: URL? {
         return URL(string: currentTrack?.album?.images.first?.url ?? currentTrack?.artists.first?.images?.first?.url ?? "")
     }
+    
 }

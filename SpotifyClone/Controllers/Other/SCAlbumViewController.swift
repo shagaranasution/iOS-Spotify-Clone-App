@@ -242,7 +242,7 @@ extension SCAlbumViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        SCPlaybackPresenter.shared.startPlayback(from: self, track: tracks[indexPath.item])
+        SCPlaybackPresenter.shared.startPlayback(from: self, tracks: tracks, startAt: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -298,7 +298,7 @@ extension SCAlbumViewController: UICollectionViewDataSource, UICollectionViewDel
 extension SCAlbumViewController: SCTracklistHeaderCollectionReusableViewDelegate {
     
     func scTracklistHeaderCollectionReusableView(_ view: SCTracklistHeaderCollectionReusableView, didTapPlayAll: Void) {
-        SCPlaybackPresenter.shared.startPlayback(from: self, tracks: tracks)
+        SCPlaybackPresenter.shared.startPlayback(from: self, tracks: tracks, startAt: 0)
     }
     
 }
